@@ -1,5 +1,6 @@
 package e;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import java.util.Stack;
@@ -28,8 +29,8 @@ public class U2 {
 					long starpibaMS = tagad.getTime() - pedejIzlozesLaiks.getTime();
 					if(starpibaMS < 60000) {
 						long palikusSek = (60000 - starpibaMS) / 1000;
-						JOptionPane.showMessageDialog(null, "Izlozi var atkārtot tikai pēc "+palikusSek+" sek~");
-						return;
+						JOptionPane.showMessageDialog(null, "Izlozi var atkārtot tikai pēc "+palikusSek+" sek~", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
+						break;
 					}
 				}
 				laimigSk.clear();
@@ -37,16 +38,28 @@ public class U2 {
 				
 				for(int i=0; i<3; i++){
 					Stack<Integer> bumbSteks = new Stack<>();
-					for(int j=0; i<10; j++) {
+					for(int j=0; j<10; j++) {
 						bumbSteks.push(rand.nextInt(10));
 					}
 					int laimigaisSk = bumbSteks.pop();
 					laimigSk.push(laimigaisSk);
-					
 				}
 				
+				pedejIzlozesLaiks = tagad;
+				JOptionPane.showMessageDialog(null, "Izloze veiksmīgi pabeigta~", "Veikmse", JOptionPane.INFORMATION_MESSAGE);
 			break;
-			
+			case "Apskatīt laimīgos skaitļus":
+				
+				if(laimigSk.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Izloze vēl nav veikta~", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
+					break;
+				}
+				SimpleDateFormat formats = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+				String laiksStr = formats.format(pedejIzlozesLaiks);
+				
+				String rez = "Izlozes laiks: "+ laiksStr + "~\nLaimīgie skaitli: " + laimigSk.toString()+"~";
+				JOptionPane.showMessageDialog(null, rez, "Rezultats", JOptionPane.INFORMATION_MESSAGE);
+			break;
 			
 			case "Apturēt":
 				JOptionPane.showMessageDialog(null, "Programma apturēta~", "Izeja", JOptionPane.PLAIN_MESSAGE);
